@@ -1,0 +1,21 @@
+#pokeball {
+  /* display: none; */
+  transition: all 0.3s ease;
+  opacity: 0%;
+}
+
+#card:hover #pokeball {
+  opacity: 100%;
+}
+
+#icon-github {
+  color: #4299e1;
+}
+
+/* #icon-coffe {
+  color: #c96943;
+} */
+
+#name-footer {
+  color: #4299e1;
+}
