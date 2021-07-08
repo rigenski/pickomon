@@ -1,0 +1,6 @@
+.bg-pokeball {
+  background-image: url(./../../../assets/img/pokeball-bg-50.svg);
+  background-size: 64%;
+  background-repeat: no-repeat;
+  background-position: center;
+}

@@ -1,48 +1,37 @@
-import React, {Fragment, Component} from 'react'
-import Hero from './Content/Hero'
-import Card from './Content/Card'
-import axios from 'axios'
+import React, { Fragment, useState, useEffect } from "react";
+import Card from "./Content/Card";
+import axios from "axios";
 
-class Content extends Component {
-    state = {
-        data: [],
-        count: 100
-    }
+function Content() {
+  const [data, setData] = useState([]);
+  const count = 60;
 
-    getDataAPI = async (id) => {
-        const getData = await axios(`https://pokeapi.co/api/v2/pokemon/${id}`)
-        const result = getData.data
-        this.setState({
-            data: [...this.state.data, result]
-        })
-        
+  const getData = async (id) => {
+    try {
+      const response = await axios(`https://pokeapi.co/api/v2/pokemon/${id}`);
+      const result = response.data;
+      setData((data) => [...data, result]);
+    } catch (err) {
+      console.log(err.message);
     }
-    
-    componentDidMount() {
-        for (let i = 1; i <= this.state.count; i++) {
-            setTimeout(() =>{
-                this.getDataAPI(i)
-            }, 1000)
-        }
+  };
 
+  useEffect(() => {
+    for (let i = 1; i <= count; i++) {
+      getData(i);
     }
-
-    render() {
-        return (
-            <Fragment>
-            <div id="container" className="w-5/5 mx-auto container mx-auto">
-                <div className="flex flex-col sm:flex-row flex-wrap">
-                    <Hero />
-                    {
-                        this.state.data.map(data => {
-                            return <Card data={data}/>
-                        })
-                    }
-                </div>
-            </div>
-        </Fragment>
-        )
-    }
+  }, []);
+  return (
+    <Fragment>
+      <div id="container" className="w-5/5 mx-auto container mx-auto">
+        <div className="flex flex-row flex-wrap py-6">
+          {data.map((item, index) => {
+            return <Card data={item} key={index} />;
+          })}
+        </div>
+      </div>
+    </Fragment>
+  );
 }
 
 export default Content;
