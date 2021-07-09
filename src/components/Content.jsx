@@ -1,34 +1,52 @@
 import React, { Fragment, useState, useEffect } from "react";
 import Card from "./Content/Card";
 import axios from "axios";
+import API from "./../services/index";
 
 function Content() {
   const url = "https://pokeapi.co/api/v2/pokemon";
   const [pokemons, setPokemons] = useState([]);
-  const [count, setCount] = useState(`${url}?limit=8`);
+  // const [count, setCount] = useState(`${url}?limit=8`);
 
   const getPokemons = async () => {
-    try {
-      const res = await axios(count);
-      const data = res.data;
+    // try {
+    //   const res = await axios(count);
+    //   const data = res.data;
 
-      setCount(data.next);
-      setPokemonsObject(data.results);
-    } catch (e) {
-      console.log(e.message);
-    }
+    //   setCount(data.next);
+    //   setPokemonsObject(data.results);
+    // } catch (e) {
+    //   console.log(e.message);
+    // }
+    API.getAllPokemons().then(
+      (result) => {
+        // setCount(result.next);
+        setPokemonsObject(result.results);
+      },
+      (err) => {
+        console.log("error :", err.message);
+      }
+    );
   };
 
   const setPokemonsObject = (results) => {
-    results.forEach(async (pokemon) => {
-      try {
-        const res = await axios(`${url}/${pokemon.name}`);
-        const data = res.data;
-        setPokemons((currentList) => [...currentList, data]);
-        await pokemons.sort((a, b) => a.id - b.id);
-      } catch (e) {
-        console.log(e.message);
-      }
+    results.forEach((pokemon) => {
+      // try {
+      //   const res = await axios(`${url}/${pokemon.name}`);
+      //   const data = res.data;
+      //   setPokemons((currentList) => [...currentList, data]);
+      //   await pokemons.sort((a, b) => a.id - b.id);
+      // } catch (e) {
+      //   console.log(e.message);
+      // }
+      API.getSpecPokemons("pokemon", pokemon.name).then(
+        (result) => {
+          setPokemons((currentList) => [...currentList, result]);
+        },
+        (err) => {
+          console.log("error :", err.message);
+        }
+      );
     });
   };
 

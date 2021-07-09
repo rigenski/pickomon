@@ -5,33 +5,33 @@
   background-position: center;
 }
 
-.rock {
-  background-color: rgb(148, 81, 81);
+.bg-bgrock {
+  background-color: rgb(122, 79, 58);
 }
-.ghost {
-  background-color: rgb(247, 247, 247);
+.bg-ghost {
+  background-color: rgb(88, 88, 88);
 }
-.electric {
-  background-color: rgb(255, 255, 161);
+.bg-electric {
+  background-color: rgb(224, 224, 85);
 }
-.bug {
-  background-color: #f6d6a7;
+.bg-bug {
+  background-color: #f0af4d;
 }
-.poison {
-  background-color: #e0a7f6;
+.bg-poison {
+  background-color: #d782f8;
 }
-.normal {
-  background-color: #f4f4f4;
+.bg-normal {
+  background-color: #7c6f6f;
 }
-.fairy {
-  background-color: rgba(255, 192, 203, 0.863);
+.bg-fairy {
+  background-color: rgba(255, 118, 141, 0.863);
 }
-.fire {
-  background-color: #fbe3df;
+.bg-fire {
+  background-color: #ff5b5b;
 }
-.grass {
-  background-color: #e2f9e1;
+.bg-grass {
+  background-color: #4ae644;
 }
-.water {
-  background-color: #e0f1fd;
+.bg-water {
+  background-color: #4ab1fa;
 }
