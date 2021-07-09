@@ -22,10 +22,18 @@ function Card(props) {
       >
         <div className="rounded-lg p-2 bg-white transform transition ease-in duration-150 hover:bg-opacity-0 bg-opacity-30 flex flex-col justify-center">
           <div className="border-2 border-white rounded-md bg-pokeball">
-            <div className=" p-4">
+            <div className="px-2 py-4">
               <div className="card-header grid">
-                <div className="flex flex-col md:flex-row justify-between items-center text-gray-900">
-                  <p className="font-bold text-lg text-blue-400">LV. 12</p>
+                <div className="flex justify-between text-gray-900">
+                  <p className="font-bold text-blue-400">
+                    XP. {props.data.base_experience}
+                  </p>
+                  <p className="font-bold text-blue-400">
+                    {Math.floor(
+                      Math.random() * props.data.stats[0].base_stat + 1
+                    )}{" "}
+                    / {props.data.stats[0].base_stat}
+                  </p>
                 </div>
               </div>
               <div className="card-img h-32">
@@ -38,7 +46,7 @@ function Card(props) {
                 <p className="text-lg uppercase text-gray-900 font-bold">
                   {props.data.name}
                 </p>
-                <p className="uppercase text-sm font-bold text-gray-600">
+                <p className="uppercase text-sm font-bold ">
                   {props.data.types[0].type.name}
                 </p>
               </div>
