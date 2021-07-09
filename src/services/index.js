@@ -18,8 +18,8 @@ const Get = (path, data) => {
 
 // GET
 
-const getAllPokemons = () => Get("pokemon?limit=8");
-const getSpecPokemons = (path, spec) => Get(path, spec);
+const getAllPokemons = () => Get("pokemon?limit=18");
+const getSpecPokemons = (path, data) => Get(path, data);
 
 const API = {
   getAllPokemons,

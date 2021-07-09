@@ -1,26 +1,15 @@
 import React, { Fragment, useState, useEffect } from "react";
-import Card from "./Content/Card";
-import axios from "axios";
+import Hero from "./Content/Hero/Hero";
+import Card from "./Content/Card/Card";
+import Button from "./Content/Button/Button";
 import API from "./../services/index";
 
 function Content() {
-  const url = "https://pokeapi.co/api/v2/pokemon";
   const [pokemons, setPokemons] = useState([]);
-  // const [count, setCount] = useState(`${url}?limit=8`);
 
   const getPokemons = async () => {
-    // try {
-    //   const res = await axios(count);
-    //   const data = res.data;
-
-    //   setCount(data.next);
-    //   setPokemonsObject(data.results);
-    // } catch (e) {
-    //   console.log(e.message);
-    // }
     API.getAllPokemons().then(
       (result) => {
-        // setCount(result.next);
         setPokemonsObject(result.results);
       },
       (err) => {
@@ -31,14 +20,6 @@ function Content() {
 
   const setPokemonsObject = (results) => {
     results.forEach((pokemon) => {
-      // try {
-      //   const res = await axios(`${url}/${pokemon.name}`);
-      //   const data = res.data;
-      //   setPokemons((currentList) => [...currentList, data]);
-      //   await pokemons.sort((a, b) => a.id - b.id);
-      // } catch (e) {
-      //   console.log(e.message);
-      // }
       API.getSpecPokemons("pokemon", pokemon.name).then(
         (result) => {
           setPokemons((currentList) => [...currentList, result]);
@@ -56,23 +37,19 @@ function Content() {
 
   return (
     <Fragment>
-      <div id="container" className="w-5/5 mx-auto container mx-auto">
-        <div className="pokemon-list flex flex-row flex-wrap py-6">
+      <main className="w-5/5 mx-auto container mx-auto">
+        <div id="hero" className="flex flex-row flex-wrap py-6">
+          <Hero />
+        </div>
+        <div id="pokemon-list" className="flex flex-row flex-wrap py-6">
           {pokemons.map((item, index) => {
             return <Card data={item} key={index} />;
           })}
         </div>
         <div className="flex justify-center">
-          <button className="rounded-lg shadow cursor-pointer bg-gradient-to-b transform transition ease-in duration-150  hover:shadow-lg from-transparent to-transparent hover:from-yellow-100 hover:to-yellow-300 border-b-2 border-blue-400">
-            <div className="py-2 px-6 inline-flex items-center rounded-lg p-2 bg-white transform transition ease-in duration-150 hover:bg-opacity-0 bg-opacity-30">
-              <span className="mr-2 font-medium" onClick={() => getPokemons()}>
-                LOAD MORE
-              </span>
-              ...
-            </div>
-          </button>
+          <Button getPokemons={getPokemons} />
         </div>
-      </div>
+      </main>
     </Fragment>
   );
 }
