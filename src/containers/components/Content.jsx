@@ -4,7 +4,7 @@ import axios from "axios";
 
 function Content() {
   const [data, setData] = useState([]);
-  const count = 60;
+  const count = 20;
 
   const getData = async (id) => {
     try {
@@ -21,10 +21,11 @@ function Content() {
       getData(i);
     }
   }, []);
+
   return (
     <Fragment>
       <div id="container" className="w-5/5 mx-auto container mx-auto">
-        <div className="flex flex-row flex-wrap py-6">
+        <div className="pokemon-list flex flex-row flex-wrap py-6">
           {data.map((item, index) => {
             return <Card data={item} key={index} />;
           })}

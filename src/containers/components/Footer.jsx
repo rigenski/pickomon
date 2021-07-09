@@ -2,18 +2,19 @@ import React from "react";
 
 function Footer(props) {
   return (
-    <footer className="bg-gray-800 mt-8">
-      <nav className="text-center p-4 ">
-        <h4 className="text-gray-400 mt-1">
+    <footer className="bg-transprant mt-8">
+      <nav className="text-center p-8 ">
+        <h4 className="text-gray-700 font-medium">
           Show project on{" "}
           <a href="https://github.com/rygenzx/pickomon" id="icon-github">
-            <i className="fab fa-github"></i> Github
+            <i className="fab fa-github"></i>{" "}
+            <span className="font-bold">Github</span>
           </a>
         </h4>
-        <h4 className="text-gray-400 mb-2 mt-1">
+        <h4 className="text-gray-700 font-medium mt-1">
           Made with <i className="fas fa-coffee" id="icon-coffe"></i> by{" "}
           <a
-            className="font-medium"
+            className="font-bold"
             href="http://rygenzx.github.io"
             id="name-footer"
           >
