@@ -6,14 +6,9 @@ function Card(props) {
   const [gender, setGender] = useState([]);
 
   const getSpecPokemon = () => {
-    API.getSpecPokemons("gender", props.data.id).then(
-      (result) => {
-        setGender(result);
-      },
-      (err) => {
-        console.log("error :", err.message);
-      }
-    );
+    API.getData("gender", props.data.id).then((result) => {
+      setGender(result);
+    });
   };
 
   // const handleClick = (id) => {
@@ -33,11 +28,11 @@ function Card(props) {
 
   return (
     <Fragment>
-      <div className="pokemon-item w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 w-1/2 p-2">
+      <div className="pokemon-item w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 p-2">
         <div
           className="card rounded-lg shadow-xl cursor-pointer bg-gradient-to-b transform transition ease-in duration-150 hover:scale-105 hover:shadow-2xl from-transparent to-transparent hover:from-yellow-100  hover:to-yellow-300"
           id={props.data.id}
-          // onClick={() => handleClick(props.data.id)}
+          onClick={() => props.detail(props.data.id)}
         >
           <div className="rounded-lg p-2 bg-white transform transition ease-in duration-150 hover:bg-opacity-0 bg-opacity-30 flex flex-col justify-center">
             <div className="border-2 border-white rounded-md bg-pokeball">
@@ -47,13 +42,15 @@ function Card(props) {
                     <p className="font-bold text-blue-400 text-lg">
                       XP. {props.data.base_experience}
                     </p>
-                    <p className="font-bold text-blue-400">
-                      {gender.name && gender.name === "male" ? (
+                    <div>
+                      {gender.name === "male" ? (
                         <i className="fas fa-mars text-3xl text-blue-400"></i>
-                      ) : (
+                      ) : gender.name === "female" ? (
                         <i className="fas fa-venus text-3xl text-pink-400"></i>
+                      ) : (
+                        <i className="fas fa-genderless text-4xl text-green-400"></i>
                       )}
-                    </p>
+                    </div>
                   </div>
                 </div>
                 <div className="card-img h-32">
@@ -63,10 +60,10 @@ function Card(props) {
                   />
                 </div>
                 <div className="card-body text-center">
-                  <p className="text-lg uppercase text-gray-900 font-bold">
+                  <p className="text-lg capitalize text-gray-900 font-bold">
                     {props.data.name}
                   </p>
-                  <div className="flex justify-center">
+                  <div className="flex justify-center mt-1">
                     <p
                       className={`uppercase text-xs rounded-lg font-bold text-white bg-${props.data.types[0].type.name} px-2 py-1`}
                     >

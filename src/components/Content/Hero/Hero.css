@@ -1,0 +1,34 @@
+.progress-40 {
+  width: 40%;
+}
+
+.bg-bgrock {
+  background-color: rgb(122, 79, 58);
+}
+.bg-ghost {
+  background-color: rgb(88, 88, 88);
+}
+.bg-electric {
+  background-color: rgb(224, 224, 85);
+}
+.bg-bug {
+  background-color: #f0af4d;
+}
+.bg-poison {
+  background-color: #d782f8;
+}
+.bg-normal {
+  background-color: #7c6f6f;
+}
+.bg-fairy {
+  background-color: rgba(255, 118, 141, 0.863);
+}
+.bg-fire {
+  background-color: #ff5b5b;
+}
+.bg-grass {
+  background-color: #4ae644;
+}
+.bg-water {
+  background-color: #4ab1fa;
+}

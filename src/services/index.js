@@ -12,18 +12,13 @@ const Get = (path, data) => {
       }
     );
   });
-
   return promise;
 };
 
-// GET
-
-const getAllPokemons = () => Get("pokemon?limit=18");
-const getSpecPokemons = (path, data) => Get(path, data);
+const getData = (path, data) => Get(path, data);
 
 const API = {
-  getAllPokemons,
-  getSpecPokemons,
+  getData,
 };
 
 export default API;
