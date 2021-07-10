@@ -6,18 +6,19 @@ import Button from "./Content/Button/Button";
 import API from "./../services/index";
 
 function Content() {
+  const count = 16;
   const [pokemons, setPokemons] = useState([]);
   const [pokemonId, setPokemonId] = useState(1);
-  const [more, setMore] = useState(
-    "https://pokeapi.co/api/v2/pokemon?limit=20"
+  const [next, setNext] = useState(
+    `https://pokeapi.co/api/v2/pokemon?limit=${18}`
   );
 
   const getPokemons = async () => {
     try {
-      const response = await axios(more);
+      const response = await axios(next);
       const result = response.data;
 
-      setMore(result.next);
+      setNext(result.next);
       setPokemonsObject(result.results);
     } catch (e) {
       console.log(e.message);
@@ -37,27 +38,27 @@ function Content() {
     });
   };
 
-  const setDetail = (id) => {
-    setPokemonId(id);
-  };
-
   useEffect(() => {
     getPokemons();
   }, []);
 
   return (
     <Fragment>
-      <main className="w-5/5 mx-auto container mx-auto">
-        <div id="hero" className="flex flex-row flex-wrap py-1">
-          {pokemonId !== 0 ? <Hero id={pokemonId} /> : <div></div>}
-        </div>
-        <div id="pokemon-list" className="flex flex-row flex-wrap py-2">
-          {pokemons.map((item, index) => {
-            return <Card data={item} key={index} detail={setDetail} />;
-          })}
-        </div>
-        <div className="flex justify-center">
-          <Button getPokemons={getPokemons} />
+      <main>
+        <div className="container mx-auto">
+          <div id="hero" className="flex flex-row flex-wrap ">
+            <Hero id={pokemonId} />
+          </div>
+          <div id="pokemons-list" className="flex flex-row flex-wrap ">
+            {pokemons.map((item, index) => {
+              return (
+                <Card data={item} key={index} setPokemonId={setPokemonId} />
+              );
+            })}
+          </div>
+          <div id="load-more" className="flex justify-center py-2">
+            <Button getPokemons={getPokemons} />
+          </div>
         </div>
       </main>
     </Fragment>

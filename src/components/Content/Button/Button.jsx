@@ -1,12 +1,12 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 function Button(props) {
   return (
-    <div>
-      <button className="rounded-lg shadow cursor-pointer bg-gradient-to-b transform transition ease-in duration-150  hover:shadow-lg from-transparent to-transparent hover:from-yellow-100 hover:to-yellow-300 border-b-2 border-blue-400">
-        <div className="py-2 px-6 inline-flex items-center rounded-lg p-2 bg-white transform transition ease-in duration-150 hover:bg-opacity-0 bg-opacity-30">
+    <Fragment>
+      <button className="rounded-lg shadow cursor-pointer border-b-2 border-blue-400 bg-gradient-to-b from-transparent to-transparent transform transition ease-in duration-150  hover:shadow-lg  hover:from-yellow-100 hover:to-yellow-300 ">
+        <div className="rounded-lg px-6 py-2 bg-white bg-opacity-30 transform transition ease-in duration-150 hover:bg-opacity-0">
           <span
-            className="mr-2 font-medium"
+            className="mr-2 font-medium text-gray-800"
             onClick={() => props.getPokemons()}
           >
             LOAD MORE
@@ -14,7 +14,7 @@ function Button(props) {
           ...
         </div>
       </button>
-    </div>
+    </Fragment>
   );
 }
 
