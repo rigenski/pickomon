@@ -6,9 +6,10 @@ import Button from "./Content/Button/Button";
 import API from "./../services/index";
 
 function Content() {
-  const count = 18;
+  const count = 24;
   const [pokemons, setPokemons] = useState([]);
   const [pokemonDetail, setPokemonDetail] = useState([2, "ivysaur"]);
+  const [loading, isLoading] = useState(false);
   const [next, setNext] = useState(
     `https://pokeapi.co/api/v2/pokemon?limit=${count}`
   );
@@ -20,6 +21,8 @@ function Content() {
 
       setNext(result.next);
       setPokemonsObject(result.results);
+
+      isLoading(false);
     } catch (e) {
       console.log(e.message);
     }
@@ -40,6 +43,11 @@ function Content() {
 
   const handlePokemonDetail = (id, name) => {
     setPokemonDetail([id, name]);
+  };
+
+  const handleLoadMore = () => {
+    isLoading(true);
+    getPokemons();
   };
 
   useEffect(() => {
@@ -65,7 +73,11 @@ function Content() {
             })}
           </div>
           <div id="load-more" className="flex justify-center py-2">
-            <Button getPokemons={getPokemons} />
+            {loading ? (
+              <Button getPokemons={handleLoadMore} loading={true} />
+            ) : (
+              <Button getPokemons={handleLoadMore} loading={false} />
+            )}
           </div>
         </div>
       </main>
