@@ -1,29 +1,25 @@
 import React, { Fragment, useEffect, useState } from "react";
+import axios from "axios";
 import API from "./../../../services/index";
 import "./Hero.css";
 
 function Hero(props) {
   const [pokemon, setPokemon] = useState([]);
-  const [habitat, setHabitat] = useState([]);
-  const [gender, setGender] = useState([]);
-  const [characteristic, setCharacter] = useState([]);
   const [move, setMove] = useState([]);
-  const [color, setColor] = useState([]);
-  const spec = [
-    "pokemon",
-    "habitat",
-    "gender",
-    "characteristic",
-    "move",
-    "color",
-  ];
+  const [favorite, setFavorite] = useState([]);
+  const [gender, setGender] = useState();
+  const [habitat, setHabitat] = useState();
+  const spec = ["pokemon", "move"];
 
   const getSpecPokemon = () => {
+    API.getData("gender").then((result) => {
+      getSpecGender(result.results);
+    });
+    API.getData("pokemon-habitat").then((result) => {
+      getSpecHabitat(result.results);
+    });
     spec.forEach((spec) => {
-      API.getData(
-        spec === "habitat" || spec === "color" ? `pokemon-${spec}` : spec,
-        props.id
-      ).then(
+      API.getData(spec, props.id).then(
         (result) => {
           setSpecPokemon(result, spec);
         },
@@ -34,27 +30,53 @@ function Hero(props) {
     });
   };
 
+  const getSpecGender = (results) => {
+    results.forEach(async (gender) => {
+      try {
+        const response = await axios.get(gender.url);
+        const result = response.data;
+
+        result.pokemon_species_details.forEach((detail) => {
+          if (detail.pokemon_species.name === props.name) {
+            setGender(result.name);
+          }
+        });
+      } catch (e) {
+        console.log(e.message);
+      }
+    });
+  };
+
+  const getSpecHabitat = (results) => {
+    results.forEach(async (habitat) => {
+      try {
+        const response = await axios.get(habitat.url);
+        const result = response.data;
+
+        result.pokemon_species.forEach((detail) => {
+          if (detail.name === props.name) {
+            setHabitat(result.name);
+          }
+        });
+      } catch (e) {
+        console.log(e.message);
+      }
+    });
+  };
+
   const setSpecPokemon = (result, spec) => {
     switch (spec) {
       case "pokemon":
         setPokemon(result);
         break;
-      case "habitat":
-        setHabitat(result);
-        break;
-      case "gender":
-        setGender(result);
-        break;
-      case "characteristic":
-        setCharacter(result);
-        break;
       case "move":
         setMove(result);
         break;
-      case "color":
-        setColor(result);
-        break;
     }
+  };
+
+  const handleFavorite = (id) => {
+    setFavorite((data) => [...data, id]);
   };
 
   useEffect(() => {
@@ -62,13 +84,31 @@ function Hero(props) {
   }, [props.id]);
 
   useEffect(() => {
-    // console.log(pokemon);
-    // console.log(gender);
-    // console.log(habitat);
-    // console.log(characteristic.descriptions);
-    // console.log(move);
-    // console.log(color);
-  }, [pokemon]);
+    if (!localStorage.getItem("favorite")) {
+      localStorage.setItem("favorite", "[]");
+    }
+
+    setFavorite(JSON.parse(localStorage.getItem("favorite")));
+  }, []);
+
+  useEffect(() => {
+    let dataArray = favorite.filter(function (elem, pos) {
+      return favorite.indexOf(elem) == pos;
+    });
+
+    localStorage.setItem("favorite", JSON.stringify(dataArray));
+  }, [favorite]);
+
+  // useEffect(() => {
+  // console.log(pokemon.id);
+  // console.log(gender);
+  // console.log(habitat);
+  // console.log(characteristic.descriptions);
+  // console.log(move);
+  // console.log(color);
+  // console.log(favorite);
+  //   console.log(like);
+  // }, [gender]);
 
   return (
     <Fragment>
@@ -82,7 +122,7 @@ function Hero(props) {
         </div>
       </div>
       <div className="w-full md:w-5/12 p-2">
-        <div className="bg-white shadow-lg bg-opacity-30 rounded-md p-4 lg:p-8">
+        <div className="bg-white shadow-lg bg-opacity-30 rounded-md p-4 xl:p-8">
           <div className="flex-grow">
             <div className="flex justify-between">
               <div className="flex">
@@ -98,10 +138,12 @@ function Hero(props) {
                 })}
               </div>
               <div>
-                {gender.name && gender.name === "male" ? (
+                {gender === "male" ? (
                   <i className="fas fa-mars text-4xl text-blue-400"></i>
-                ) : (
+                ) : gender === "female" ? (
                   <i className="fas fa-venus text-4xl text-pink-400"></i>
+                ) : (
+                  <i className="fas fa-genderless text-5xl text-green-400"></i>
                 )}
               </div>
             </div>
@@ -164,7 +206,7 @@ function Hero(props) {
             </ul>
             <div className="w-full flex justify-between mb-4">
               <h2 className={`Capitalize font-bold text-gray-800`}>
-                Habitat: <span className="capitalize">{habitat.name}</span>
+                Habitat: <span className="capitalize">{habitat}</span>
               </h2>
               <h2 className={`Capitalize font-bold text-gray-800`}>
                 {pokemon.weight} Weight / {pokemon.height} Height
@@ -172,7 +214,10 @@ function Hero(props) {
             </div>
           </div>
           <div className="w-full">
-            <button className="w-full font-bold text-white rounded-md px-10 py-2 bg-gradient-to-tr from-green-400 via-blue-500 to-purple-400 transform transition ease-in duration-150  hover:from-green-300 hover:via-blue-300 hover:via-blue-300">
+            <button
+              className="w-full font-bold text-white rounded-md px-10 py-2 bg-gradient-to-tr from-green-400 via-blue-500 to-purple-400 bg-opacity-80 transition ease-in duration-150 hover:from-purple-400 hover:via-green-500 hover:to-blue-400"
+              onClick={() => handleFavorite(pokemon.id)}
+            >
               Like a <span className="capitalize">{pokemon.name}</span>
             </button>
           </div>

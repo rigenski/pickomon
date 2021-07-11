@@ -1,18 +1,36 @@
+import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import API from "./../../../services/index";
 import "./Card.css";
 
 function Card(props) {
-  const [gender, setGender] = useState([]);
+  const [gender, setGender] = useState();
 
   const getSpecPokemon = () => {
-    API.getData("gender", props.data.id).then((result) => {
-      setGender(result);
+    API.getData("gender").then((result) => {
+      getSpecGender(result.results);
     });
   };
 
-  const handleClick = (id) => {
-    props.setPokemonId(id);
+  const getSpecGender = (results) => {
+    results.forEach(async (gender) => {
+      try {
+        const response = await axios.get(gender.url);
+        const result = response.data;
+
+        result.pokemon_species_details.forEach((detail) => {
+          if (detail.pokemon_species.name === props.data.name) {
+            setGender(result.name);
+          }
+        });
+      } catch (e) {
+        console.log(e.message);
+      }
+    });
+  };
+
+  const handleClick = (id, name) => {
+    props.setPokemonDetail(id, name);
   };
 
   useEffect(() => {
@@ -25,7 +43,7 @@ function Card(props) {
         <div
           className="card rounded-lg shadow-lg cursor-pointer bg-gradient-to-b from-transparent to-transparent transform transition ease-in duration-150 hover:scale-105 hover:shadow-xl  hover:from-yellow-100 hover:to-yellow-300"
           id={props.data.id}
-          onClick={() => handleClick(props.data.id)}
+          onClick={() => handleClick(props.data.id, props.data.name)}
         >
           <div className="rounded-lg p-2 bg-white bg-opacity-30 flex flex-col justify-center transform transition ease-in duration-150 hover:bg-opacity-0 ">
             <div className="border-2 border-white rounded-md bg-pokeball">
@@ -35,9 +53,9 @@ function Card(props) {
                     XP. {props.data.base_experience}
                   </p>
                   <div>
-                    {gender.name === "male" ? (
+                    {gender === "male" ? (
                       <i className="fas fa-mars text-3xl text-blue-400"></i>
-                    ) : gender.name === "female" ? (
+                    ) : gender === "female" ? (
                       <i className="fas fa-venus text-3xl text-pink-400"></i>
                     ) : (
                       <i className="fas fa-genderless text-4xl text-green-400"></i>
