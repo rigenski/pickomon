@@ -1,9 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 
 function Button(props) {
-  useEffect(() => {
-    console.log(props.loading);
-  }, [props.loading]);
   return (
     <Fragment>
       <button className="rounded-lg shadow cursor-pointer border-b-2 border-blue-400 bg-gradient-to-b from-transparent to-transparent transform transition ease-in duration-150  hover:shadow-lg  hover:from-yellow-100 hover:to-yellow-300 ">

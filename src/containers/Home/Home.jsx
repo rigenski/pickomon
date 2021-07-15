@@ -1,11 +1,11 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
-import Hero from "./Content/Hero/Hero";
-import Card from "./Content/Card/Card";
-import Button from "./Content/Button/Button";
-import API from "./../services/index";
+import Hero from "../../components/Content/Hero/Hero";
+import Card from "../../components/Content/Card/Card";
+import Button from "../../components/Content/Button/Button";
+import API from "../../services/index";
 
-function Content() {
+function Home(props) {
   const count = 24;
   const [pokemons, setPokemons] = useState([]);
   const [pokemonDetail, setPokemonDetail] = useState([2, "ivysaur"]);
@@ -85,4 +85,4 @@ function Content() {
   );
 }
 
-export default Content;
+export default Home;
