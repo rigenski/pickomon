@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import logo from "./../assets/img/picko-logo.svg";
+import React, { Fragment } from 'react';
+import logo from './../assets/img/picko-logo.svg';
 
 function Header(props) {
   return (

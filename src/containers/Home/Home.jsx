@@ -1,14 +1,14 @@
-import React, { Fragment, useState, useEffect } from "react";
-import axios from "axios";
-import Hero from "../../components/Content/Hero/Hero";
-import Card from "../../components/Content/Card/Card";
-import Button from "../../components/Content/Button/Button";
-import API from "../../services/index";
+import React, { Fragment, useState, useEffect } from 'react';
+import axios from 'axios';
+import Hero from '../../components/Content/Hero/Hero';
+import Card from '../../components/Content/Card/Card';
+import Button from '../../components/Content/Button/Button';
+import API from '../../services/index';
 
 function Home(props) {
   const count = 24;
   const [pokemons, setPokemons] = useState([]);
-  const [pokemonDetail, setPokemonDetail] = useState([2, "ivysaur"]);
+  const [pokemonDetail, setPokemonDetail] = useState([2, 'ivysaur']);
   const [loading, isLoading] = useState(false);
   const [next, setNext] = useState(
     `https://pokeapi.co/api/v2/pokemon?limit=${count}`
@@ -30,12 +30,12 @@ function Home(props) {
 
   const setPokemonsObject = (results) => {
     results.forEach((pokemon) => {
-      API.getData("pokemon", pokemon.name).then(
+      API.getData('pokemon', pokemon.name).then(
         (result) => {
           setPokemons((currentList) => [...currentList, result]);
         },
         (err) => {
-          console.log("error :", err.message);
+          console.log('error :', err.message);
         }
       );
     });
@@ -57,7 +57,7 @@ function Home(props) {
   return (
     <Fragment>
       <main>
-        <div className="container mx-auto">
+        <div className="container mx-auto pt-12">
           <div id="hero" className="flex flex-row flex-wrap ">
             <Hero id={pokemonDetail[0]} name={pokemonDetail[1]} />
           </div>
